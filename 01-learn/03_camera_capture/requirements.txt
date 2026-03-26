@@ -1,0 +1,5 @@
+# OpenCV 已随 JetPack 预装，无需额外安装
+# 如需安装：sudo apt-get install python3-opencv
+# 或从源码编译支持 CUDA 的版本：https://github.com/mdegans/nano_build_opencv
+opencv-python>=4.0.0
+numpy>=1.19.0
