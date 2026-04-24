@@ -31,9 +31,6 @@ PyTorch/TensorFlow 模型
 
 ```bash
 # TensorRT（JetPack 已包含）
-# PyCUDA
-pip3 install pycuda
-
 # PyTorch（用于导出 ONNX，可选）
 # 从 NVIDIA 官方下载适合 JetPack 版本的 wheel
 pip3 install torch torchvision
@@ -41,6 +38,35 @@ pip3 install torch torchvision
 # ONNX
 pip3 install onnx onnxruntime
 ```
+
+### PyCUDA 安装说明
+
+`pycuda` 依赖 CUDA Toolkit 的开发头文件。若安装时报错：
+
+```text
+fatal error: cuda.h: No such file or directory
+```
+
+说明当前系统缺少 CUDA Toolkit，或者 Python 构建过程没有找到 `/usr/local/cuda/include`。
+
+Jetson 设备上可先确认：
+
+```bash
+ls /usr/local/cuda/include/cuda.h
+```
+
+若存在，再执行：
+
+```bash
+export CUDA_HOME=/usr/local/cuda
+export PATH=$CUDA_HOME/bin:$PATH
+export CPATH=$CUDA_HOME/include:$CPATH
+export LIBRARY_PATH=$CUDA_HOME/lib64:$LIBRARY_PATH
+
+pip3 install pycuda
+```
+
+如果是在没有安装 CUDA Toolkit 的 `x86_64` 主机上，请先安装 CUDA，再继续运行本示例。
 
 ## 使用步骤
 

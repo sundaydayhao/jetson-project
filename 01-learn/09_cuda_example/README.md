@@ -23,15 +23,41 @@
 ## 依赖安装
 
 ```bash
-# PyCUDA（CUDA Python 绑定）
-pip3 install pycuda
-
 # NumPy
 pip3 install numpy
 
 # OpenCV（图像处理示例）
 # JetPack 已预装
 ```
+
+### PyCUDA 安装说明
+
+`pycuda` 依赖 CUDA Toolkit 提供的开发头文件，例如 `cuda.h`。如果安装时报错：
+
+```text
+fatal error: cuda.h: No such file or directory
+```
+
+说明当前系统没有安装 CUDA Toolkit，或者编译器找不到 CUDA 的 `include` 目录。
+
+在 Jetson 设备上，通常 CUDA 会随 JetPack 安装到 `/usr/local/cuda`，可先检查：
+
+```bash
+ls /usr/local/cuda/include/cuda.h
+```
+
+如果文件存在，再安装 `pycuda`：
+
+```bash
+export CUDA_HOME=/usr/local/cuda
+export PATH=$CUDA_HOME/bin:$PATH
+export CPATH=$CUDA_HOME/include:$CPATH
+export LIBRARY_PATH=$CUDA_HOME/lib64:$LIBRARY_PATH
+
+pip3 install pycuda
+```
+
+如果你当前是在普通 `x86_64` Linux 主机上，而不是已安装 JetPack 的 Jetson 设备，那么需要先安装 NVIDIA CUDA Toolkit，否则 `pycuda` 无法编译。
 
 ## 运行方式
 

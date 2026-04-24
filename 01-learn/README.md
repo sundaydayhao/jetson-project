@@ -74,8 +74,10 @@ python3 main.py
 
 1. GPIO 操作需要 root 权限或将用户加入 `gpio` 组
 2. 摄像头示例支持 USB 摄像头和 CSI 摄像头
-3. TensorRT 示例需要提前转换模型
-4. 运行前请确认硬件连接正确，避免短路损坏设备
+3. `05_object_detection`、`06_tensorrt_inference`、`09_cuda_example` 依赖 JetPack 提供的 CUDA/TensorRT 环境，不建议在未安装 CUDA Toolkit 的普通 `x86_64` 主机上直接安装 `pycuda`
+4. 如果安装 `pycuda` 时出现 `fatal error: cuda.h: No such file or directory`，通常表示系统缺少 CUDA Toolkit 或未正确配置 `/usr/local/cuda/include`
+5. TensorRT 示例需要提前转换模型
+6. 运行前请确认硬件连接正确，避免短路损坏设备
 
 ## 参考资源
 

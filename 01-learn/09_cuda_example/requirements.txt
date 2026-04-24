@@ -1,3 +1,4 @@
-pycuda>=2021.1
+# PyCUDA 需要系统已安装 CUDA Toolkit（需提供 cuda.h），请按 README 手动安装
+# pycuda>=2021.1
 numpy>=1.19.0
 opencv-python>=4.0.0
