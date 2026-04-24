@@ -1,92 +1,100 @@
 """
-COCO 数据集 80 类标签
+COCO 数据集类别映射。
+
+说明：
+- 目标检测模型通常直接输出 COCO 原始类别 ID（0/1..90）
+- 其中部分类别编号在官方标签里是空缺的，因此不能简单按顺序索引列表
 """
 
-COCO_CLASSES = [
-    "background",    # 0
-    "person",        # 1  人
-    "bicycle",       # 2  自行车
-    "car",           # 3  汽车
-    "motorcycle",    # 4  摩托车
-    "airplane",      # 5  飞机
-    "bus",           # 6  公共汽车
-    "train",         # 7  火车
-    "truck",         # 8  卡车
-    "boat",          # 9  船
-    "traffic light", # 10 交通灯
-    "fire hydrant",  # 11 消防栓
-    "stop sign",     # 13 停车标志
-    "parking meter", # 14 停车计时器
-    "bench",         # 15 长椅
-    "bird",          # 16 鸟
-    "cat",           # 17 猫
-    "dog",           # 18 狗
-    "horse",         # 19 马
-    "sheep",         # 20 羊
-    "cow",           # 21 牛
-    "elephant",      # 22 大象
-    "bear",          # 23 熊
-    "zebra",         # 24 斑马
-    "giraffe",       # 25 长颈鹿
-    "backpack",      # 27 背包
-    "umbrella",      # 28 雨伞
-    "handbag",       # 31 手提包
-    "tie",           # 32 领带
-    "suitcase",      # 33 手提箱
-    "frisbee",       # 34 飞盘
-    "skis",          # 35 滑雪板
-    "snowboard",     # 36 单板滑雪
-    "sports ball",   # 37 运动球
-    "kite",          # 38 风筝
-    "baseball bat",  # 39 棒球棒
-    "baseball glove",# 40 棒球手套
-    "skateboard",    # 41 滑板
-    "surfboard",     # 42 冲浪板
-    "tennis racket", # 43 网球拍
-    "bottle",        # 44 瓶子
-    "wine glass",    # 46 酒杯
-    "cup",           # 47 杯子
-    "fork",          # 48 叉子
-    "knife",         # 49 刀
-    "spoon",         # 50 勺子
-    "bowl",          # 51 碗
-    "banana",        # 52 香蕉
-    "apple",         # 53 苹果
-    "sandwich",      # 54 三明治
-    "orange",        # 55 橙子
-    "broccoli",      # 56 西兰花
-    "carrot",        # 57 胡萝卜
-    "hot dog",       # 58 热狗
-    "pizza",         # 59 披萨
-    "donut",         # 60 甜甜圈
-    "cake",          # 61 蛋糕
-    "chair",         # 62 椅子
-    "couch",         # 63 沙发
-    "potted plant",  # 64 盆栽植物
-    "bed",           # 65 床
-    "dining table",  # 67 餐桌
-    "toilet",        # 70 马桶
-    "tv",            # 72 电视
-    "laptop",        # 73 笔记本电脑
-    "mouse",         # 74 鼠标
-    "remote",        # 75 遥控器
-    "keyboard",      # 76 键盘
-    "cell phone",    # 77 手机
-    "microwave",     # 78 微波炉
-    "oven",          # 79 烤箱
-    "toaster",       # 80 烤面包机
-    "sink",          # 81 水槽
-    "refrigerator",  # 82 冰箱
-    "book",          # 84 书
-    "clock",         # 85 时钟
-    "vase",          # 86 花瓶
-    "scissors",      # 87 剪刀
-    "teddy bear",    # 88 泰迪熊
-    "hair drier",    # 89 吹风机
-    "toothbrush",    # 90 牙刷
+COCO_CLASSES = {
+    0: "background",
+    1: "person",
+    2: "bicycle",
+    3: "car",
+    4: "motorcycle",
+    5: "airplane",
+    6: "bus",
+    7: "train",
+    8: "truck",
+    9: "boat",
+    10: "traffic light",
+    11: "fire hydrant",
+    13: "stop sign",
+    14: "parking meter",
+    15: "bench",
+    16: "bird",
+    17: "cat",
+    18: "dog",
+    19: "horse",
+    20: "sheep",
+    21: "cow",
+    22: "elephant",
+    23: "bear",
+    24: "zebra",
+    25: "giraffe",
+    27: "backpack",
+    28: "umbrella",
+    31: "handbag",
+    32: "tie",
+    33: "suitcase",
+    34: "frisbee",
+    35: "skis",
+    36: "snowboard",
+    37: "sports ball",
+    38: "kite",
+    39: "baseball bat",
+    40: "baseball glove",
+    41: "skateboard",
+    42: "surfboard",
+    43: "tennis racket",
+    44: "bottle",
+    46: "wine glass",
+    47: "cup",
+    48: "fork",
+    49: "knife",
+    50: "spoon",
+    51: "bowl",
+    52: "banana",
+    53: "apple",
+    54: "sandwich",
+    55: "orange",
+    56: "broccoli",
+    57: "carrot",
+    58: "hot dog",
+    59: "pizza",
+    60: "donut",
+    61: "cake",
+    62: "chair",
+    63: "couch",
+    64: "potted plant",
+    65: "bed",
+    67: "dining table",
+    70: "toilet",
+    72: "tv",
+    73: "laptop",
+    74: "mouse",
+    75: "remote",
+    76: "keyboard",
+    77: "cell phone",
+    78: "microwave",
+    79: "oven",
+    80: "toaster",
+    81: "sink",
+    82: "refrigerator",
+    84: "book",
+    85: "clock",
+    86: "vase",
+    87: "scissors",
+    88: "teddy bear",
+    89: "hair drier",
+    90: "toothbrush",
+}
+
+VALID_COCO_CLASS_NAMES = [
+    name for class_id, name in COCO_CLASSES.items()
+    if class_id != 0
 ]
 
-# 中文标签映射
 COCO_CLASSES_CN = {
     "person": "人",
     "bicycle": "自行车",
@@ -100,6 +108,7 @@ COCO_CLASSES_CN = {
     "traffic light": "交通灯",
     "fire hydrant": "消防栓",
     "stop sign": "停车标志",
+    "parking meter": "停车计时器",
     "bench": "长椅",
     "bird": "鸟",
     "cat": "猫",
@@ -116,6 +125,16 @@ COCO_CLASSES_CN = {
     "handbag": "手提包",
     "tie": "领带",
     "suitcase": "手提箱",
+    "frisbee": "飞盘",
+    "skis": "滑雪板",
+    "snowboard": "单板滑雪",
+    "sports ball": "运动球",
+    "kite": "风筝",
+    "baseball bat": "棒球棒",
+    "baseball glove": "棒球手套",
+    "skateboard": "滑板",
+    "surfboard": "冲浪板",
+    "tennis racket": "网球拍",
     "bottle": "瓶子",
     "wine glass": "酒杯",
     "cup": "杯子",
@@ -147,6 +166,7 @@ COCO_CLASSES_CN = {
     "cell phone": "手机",
     "microwave": "微波炉",
     "oven": "烤箱",
+    "toaster": "烤面包机",
     "sink": "水槽",
     "refrigerator": "冰箱",
     "book": "书",
@@ -157,6 +177,11 @@ COCO_CLASSES_CN = {
     "hair drier": "吹风机",
     "toothbrush": "牙刷",
 }
+
+
+def get_class_name(class_id):
+    """根据 COCO 原始类别 ID 获取英文标签名"""
+    return COCO_CLASSES.get(int(class_id))
 
 
 def get_label(class_name, use_chinese=False):

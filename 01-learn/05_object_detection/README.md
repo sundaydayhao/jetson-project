@@ -1,32 +1,64 @@
-# 示例 05：SSD 目标检测（TensorRT 加速）
+# 示例 05：目标检测（OpenCV / TensorRT 双后端）
 
 ## 功能说明
 
-使用预训练的 SSD MobileNet V2 模型进行实时目标检测，支持 80 类 COCO 数据集目标。通过 TensorRT 优化，在 Jetson Nano 上实现高效推理。
+使用预训练的 SSD MobileNet 模型进行实时目标检测，支持摄像头实时检测和单张图片检测。
 
-## 检测类别（COCO 80类）
-
-人、自行车、汽车、摩托车、飞机、公共汽车、火车、卡车、船、交通灯、消防栓、停车标志、长椅、鸟、猫、狗、马、羊、牛、大象、熊、斑马、长颈鹿、背包、雨伞、手提包、领带、手提箱、飞盘、滑雪板、运动球、风筝、棒球棒、棒球手套、滑板、冲浪板、网球拍、瓶子、酒杯、杯子、叉子、刀、勺子、碗、香蕉、苹果、三明治、橙子、西兰花、胡萝卜、热狗、披萨、甜甜圈、蛋糕、椅子、沙发、盆栽植物、床、餐桌、马桶、电视、笔记本电脑、鼠标、遥控器、键盘、手机、微波炉、烤箱、烤面包机、水槽、冰箱、书、时钟、花瓶、剪刀、泰迪熊、吹风机、牙刷
+- `opencv` 后端：TensorFlow SSD MobileNet V2
+- `tensorrt` 后端：ONNX SSD MobileNet V1 + TensorRT 引擎
 
 ## 依赖
 
 ```bash
-# 安装 TensorRT Python 绑定（JetPack 已包含）
-# 安装 PyCUDA
+# OpenCV 模式
+pip3 install numpy opencv-python
+
+# TensorRT 模式额外需要
 pip3 install pycuda
 
-# 下载预训练模型
+# 下载模型
 bash download_models.sh
+```
+
+说明：
+
+- TensorRT Python 绑定通常随系统安装，不建议直接用 `pip install tensorrt`
+- `main.py --backend tensorrt` 首次运行时，如果发现 `models/ssd_mobilenet_v1_12_fp16.trt` 不存在，会自动尝试从 ONNX 构建引擎
+- 如需手动构建，可直接运行 `python3 build_engine.py`
+
+## TensorRT 流程
+
+```bash
+# 1. 下载 OpenCV / TensorRT 两套模型
+bash download_models.sh
+
+# 2. 手动构建 TensorRT 引擎（可选）
+python3 build_engine.py
+
+# 3. 使用 TensorRT 后端跑摄像头
+python3 main.py --backend tensorrt
+```
+
+如果你的输入分辨率较高，也可以自定义 TensorRT optimization profile：
+
+```bash
+python3 build_engine.py \
+  --min-shape 1x300x300x3 \
+  --opt-shape 1x720x1280x3 \
+  --max-shape 1x1080x1920x3
 ```
 
 ## 运行方式
 
 ```bash
-# 摄像头实时检测（使用 TensorRT 引擎）
+# 默认 OpenCV 后端
 python3 main.py
 
-# 使用 OpenCV DNN 后端（无需 TensorRT）
+# OpenCV DNN 后端
 python3 main.py --backend opencv
+
+# TensorRT 后端
+python3 main.py --backend tensorrt
 
 # 检测图片
 python3 main.py --image test.jpg
@@ -46,17 +78,13 @@ python3 main.py --csi
 | `s` | 截图 |
 | `+/-` | 调整置信度阈值 |
 
-## 预期效果
+## 说明
 
-- 实时检测画面中的物体
-- 显示类别名称、置信度和边界框
-- 不同类别使用不同颜色标注
-- 显示实时 FPS
+- 如果当前 OpenCV 没有 CUDA DNN 支持，`opencv` 后端会自动回退到 CPU
+- 如果 TensorRT 初始化失败，程序会打印原因并自动回退到 OpenCV 后端
+- COCO 标签按官方原始类别 ID 映射，避免出现类别名称错位
 
-## 知识点
+## 参考来源
 
-- SSD（Single Shot MultiBox Detector）原理
-- TensorRT 引擎构建与推理
-- OpenCV DNN 模块目标检测
-- COCO 数据集类别
-- 非极大值抑制（NMS）
+- ONNX Model Zoo SSD MobileNet V1: https://huggingface.co/onnxmodelzoo/ssd_mobilenet_v1_12
+- TensorFlow SSD MobileNet V2: http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v2_coco_2018_03_29.tar.gz
